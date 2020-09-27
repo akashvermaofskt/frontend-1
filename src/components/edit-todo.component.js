@@ -14,7 +14,7 @@ export default class EditTodo extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/todos/' + this.props.match.params.id)
+        axios.get('https://todo-backend-akash.herokuapp.com/todos/' + this.props.match.params.id)
             .then(res => {
                 console.log("Res data-> ", res.data)
                 this.setState({
@@ -55,7 +55,7 @@ export default class EditTodo extends Component {
 
         };
         console.log("Updated Todo -> ", obj)
-        axios.post('http://localhost:4000/todos/update/' + this.props.match.params.id, obj)
+        axios.post('https://todo-backend-akash.herokuapp.com/todos/update/' + this.props.match.params.id, obj)
             .then(res => console.log(res.data));
 
         this.props.history.push('/');

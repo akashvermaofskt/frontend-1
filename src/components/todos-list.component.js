@@ -38,7 +38,7 @@ export default class TodosList extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        axios.get('http://localhost:4000/todos')
+        axios.get('https://todo-backend-akash.herokuapp.com/todos')
             .then(res => {
                 console.log(res)
                 this.setState({
@@ -49,7 +49,7 @@ export default class TodosList extends Component {
     }
 
     componentDidUpdate() {
-        axios.get('http://localhost:4000/todos')
+        axios.get('https://todo-backend-akash.herokuapp.com/todos')
             .then(res => {
                 if (JSON.stringify(this.state.todos) !== JSON.stringify(res.data)) {
                     this.setState({

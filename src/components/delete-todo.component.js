@@ -14,7 +14,7 @@ const DeleteStudent = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-                `http://localhost:4000/todos/${props.match.params.id}`
+                `https://todo-backend-akash.herokuapp.com/todos/${props.match.params.id}`
             );
             setData({ ...result.data });
         };
@@ -23,7 +23,7 @@ const DeleteStudent = (props) => {
 
     const onDeleteTodoData = (e) => {
         e.preventDefault();
-        axios.delete(`http://localhost:4000/todos/delete/${props.match.params.id}`, data).then(res => console.log(res.data));
+        axios.delete(`https://todo-backend-akash.herokuapp.com/todos/delete/${props.match.params.id}`, data).then(res => console.log(res.data));
         props.history.push('/');
     }
     const rows = data.todo_tasks.map((task, index) => <Row>{(index + 1) + ". " + task + "\n"}</Row>)
