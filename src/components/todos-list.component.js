@@ -21,12 +21,6 @@ const Todo = props => {
     );
 }
 
-const CompareTodos = (todos1, todos2) => {
-    if (todos1.length !== todos2.length) {
-        return false;
-    }
-    return true;
-}
 export default class TodosList extends Component {
     _isMounted = false;
     constructor(props) {
