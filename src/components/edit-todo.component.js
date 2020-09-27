@@ -1,6 +1,6 @@
-import React , { Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-
+import TaskHolder from './task-input-holder';
 export default class EditTodo extends Component {
 
     constructor(props) {
@@ -8,22 +8,23 @@ export default class EditTodo extends Component {
         this.state = {
             todo_description: '',
             todo_responsible: '',
-            todo_task: [],
-           
+            todo_tasks: [],
+
         }
     }
 
     componentDidMount() {
         axios.get('http://localhost:4000/todos/' + this.props.match.params.id)
-            .then( res => {
+            .then(res => {
+                console.log("Res data-> ", res.data)
                 this.setState({
                     todo_description: res.data.todo_description,
                     todo_responsible: res.data.todo_responsible,
-                    todo_task: res.data.todo_task,
-                   
+                    todo_tasks: res.data.todo_tasks,
+
                 })
             })
-            .catch( err => console.log(err));
+            .catch(err => console.log(err));
     }
 
     onChangeTodoDescription = (e) => {
@@ -38,24 +39,24 @@ export default class EditTodo extends Component {
         });
     }
 
-    onChangeTodoTask = (e) => {
-        
+    updateTasks = (tasks) => {
         this.setState({
-            todo_task:e.target.value
+            todo_tasks: tasks
         });
     }
 
-  
+
     onSubmit = (e) => {
         e.preventDefault();
         const obj = {
             todo_description: this.state.todo_description,
             todo_responsible: this.state.todo_responsible,
-            todo_task: this.state.todo_task,
-           
+            todo_tasks: this.state.todo_tasks,
+
         };
+        console.log("Updated Todo -> ", obj)
         axios.post('http://localhost:4000/todos/update/' + this.props.match.params.id, obj)
-            .then( res => console.log(res.data));
+            .then(res => console.log(res.data));
 
         this.props.history.push('/');
     }
@@ -67,34 +68,28 @@ export default class EditTodo extends Component {
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Description: </label>
-                        <input type="text" 
-                                className="form-control"
-                                value={this.state.todo_description}
-                                onChange={this.onChangeTodoDescription}
-                                />
+                        <input type="text"
+                            className="form-control"
+                            value={this.state.todo_description}
+                            onChange={this.onChangeTodoDescription}
+                        />
                     </div>
                     <div className="form-group">
                         <label>Responsible: </label>
-                        <input type="text" 
-                                className="form-control"
-                                value={this.state.todo_responsible}
-                                onChange={this.onChangeTodoResponsible}
-                                />
+                        <input type="text"
+                            className="form-control"
+                            value={this.state.todo_responsible}
+                            onChange={this.onChangeTodoResponsible}
+                        />
                     </div>
                     <div className="form-group">
                         <label>Task: </label>
-                        <input type="text" 
-                                className="form-control"
-                                value={this.state.todo_task}
-                                onChange={this.onChangeTodoTask}
-                                />
-                                
-                                
+                        <TaskHolder tasks={this.state.todo_tasks} updateTasks={this.updateTasks} />
                     </div>
-                    
-                        <div className="form-group">
-                            <input type="submit" value="Update Todo" className="btn btn-primary" />
-                        </div>
+
+                    <div className="form-group">
+                        <input type="submit" value="Update Todo" className="btn btn-primary" />
+                    </div>
                 </form>
             </div>
         )
